@@ -1,0 +1,160 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/Regal.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+    <script src="~/bootstrap/bootstrap/bootstrap.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/custom_scripts/role_assignment.js"></script>
+</head>
+
+<body>
+<div id="divUpdateRegData">
+    <div class="card-header" align="center">
+        <h3 align="center" class="card-title  style2  style3 text-Success">Registration Data</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+
+    <div class="card-body">
+
+        <div class="form-group">
+            <span class="style6">
+                <strong>Assign New Roll</strong>
+            </span>
+
+            <select class="form-control" id="lstUserRoll">
+            </select>
+
+
+        </div>
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+        <button type="submit" id="btnRollUpdate" class="btn btn-success  form-control">Update Roll</button>
+    </div>
+
+</div>
+
+    <div class="card-body">
+
+        <table class="table table-primary table-striped table-bordered ">
+
+
+            <tr>
+                <th class="style7"><div align="center">Name</div></th>
+                <th class="style7"><div align="center">Email</div></th>
+                <th class="style7"><div align="center">Phone No</div> </th>
+                <th class="style7"><div align="center">Default Roll</div></th>
+                <th class="style7"><div align="center">Action</div></th>
+            </tr>
+
+            <tbody id='tblRegData'>
+            </tbody>
+
+        </table>
+
+    </div>
+</body>
+</html>
+
+<script>
+    
+    $(document).ready(function () {              
+        $('#divUpdateRegData').hide();
+
+        //Get Registerd_data
+        var myToken = getCookie("MyToken");
+        alert(myToken);
+        $.ajax(
+            {
+                url: '/api/Hospital/Get_Patient_Data',
+                type: "GET",
+                dataType: "json",
+                headers: { "Authorization": "Bearer " + myToken },
+                success: function (data) {
+                    var trData = "";
+                    $.each(data, function (index, obj) {
+                        trData += "<tr><td align='center'>" + obj.Patient_Name + "</td><td align='center'>" + obj.Email + "</td><td align='center'>" + obj.Ph_Number + "</td><td align='center'>" + obj.UserRole_Title + "</td><td align='center'><button class='btn btnEdit btn-info form-control' id='btnEdit" + obj.Patient_Id + "'>Edit</button > </tr> ";
+                    });
+
+                    $('#tblRegData').html(trData);
+                }
+            });
+            });
+
+            //Btn_Edit
+            var updateRollid=0;
+    $(document).on('click', '.btnEdit', function () {
+
+        $('#divUpdateRegData').show();
+        var Patient_Id = $(this).attr('id');
+        Patient_Id = Patient_Id.replace('btnEdit', '');
+        updateRollid = Patient_Id;
+       
+
+            });
+
+
+            //Get user_Role
+    $.ajax(
+        {
+            url: '/api/UserRole/GetUserRole',
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                var trData = "";
+                $.each(data, function (index, obj) {
+
+                    trData += "<option value = '" + obj.UserRole_Id + "'>" + obj.UserRole_Title + "</option>";
+
+                });
+
+                $('#lstUserRoll').html(trData);
+            
+            }
+        });
+        //UPDATE
+    $('#btnRollUpdate').click(function () {
+
+     
+
+        var UR_id = $('#lstUserRoll').val();
+        
+        var obj = {    
+            "Patient_Id": updateRollid,
+            "UserRole_Id": UR_id
+        };
+        
+        $.ajax({
+            url: '/api/Hospital/UpdateRoll',
+            type: "PUT",
+            contentType: 'application/json',
+            dataType: "json",
+            data: JSON.stringify(obj),
+            success: function (data) {
+                if (data.Result == "Updated successfully")
+                {
+                    location.reload();
+                    $('#divUpdateRegData').hide();
+                    alert('Roll Updated');
+                    
+                }
+                else
+                {
+                    alert(data.Result);
+                }
+
+            }
+        });
+    });
+
+</script>
+<script src="~/custom_scripts/tokenmanagement.js"></script>

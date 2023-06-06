@@ -1,0 +1,214 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/Regal.cshtml";
+}
+<html>
+    <head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+<script src="~/bootstrap/bootstrap/bootstrap.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/custom_scripts/tokenmanagement.js"></script>
+    <script src="~/custom_page/login_patient.js"></script>
+</head>
+<body>
+<!-- general form elements -->
+<div  id="divUpdateUserRole">
+    <div class="card-header" align="center">
+        <h3 align="center" class="card-title  style2  style3 text-danger">UserRle Update Form</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+
+    <div class="card-body">
+        <div class="form-group">
+            <label for="UserRole_Id">UserRole_Id</label>
+            <input type="number" class="form-control" id="txtUserRoleUpdateId" readonly>
+        </div>
+        <div class="form-group">
+            <label for="UserRole_Title">UserRole_Title</label>
+            <input type="text" class="form-control" id="txtUserRoleUpdateTitle">
+        </div>        
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer">
+        <button type="submit" id="btnUserRoleUpdate" class="btn btn-danger  form-control">Update</button>
+    </div>
+
+</div>
+
+
+
+<!-- general form elements -->
+<div  id="divUserRole">
+    <div class="card-header" align="center">
+        <h3 align="center" class="card-title  style2 text-dark style3">User_Role</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+
+    <div class="card-body">
+        <div class="form-group">
+            <label for="UserRole_Id">UserRole_Id</label>
+            <input type="number" class="form-control" id="txtUserRole_Id" readonly>
+        </div>
+        <div class="form-group">
+            <label for="UserRole_Title">UserRole_Title</label>
+            <input type="text" class="form-control" id="txtUserRole_Title">
+        </div>
+
+    </div>
+    <!-- /.card-body -->
+
+    <div class="card-footer" align="center">
+        <button type="submit" id="btnUserRoleEnter" class="btn btn-danger btn-md">Enter</button>
+    </div>
+
+
+    <div class="card-body">
+
+        <table class="table table-danger table-striped table-bordered">
+
+
+            <tr>
+                <th class="style7"><div align="center">UserRole_Id</div></th>
+                <th class="style7"><div align="center">UserRole_Title</div> </th>
+                <th class="style7"><div align="center">Action</div> </th>
+  </tr>
+
+            <tbody id='tblUserRole'>
+            </tbody>
+
+        </table>
+
+    </div>
+</div>
+</body>
+</html>
+
+<script>
+    $(document).ready(function(){
+        GetUR();
+        $('#divUpdateUserRole').hide();
+   
+    // Get UserROle
+    function GetUR() {
+            //var Token = getCookie("MyToken");
+            //alert(Token);
+        $.ajax(
+            {
+                url: '/api/UserRole/GetUserRole',
+                type: "GET",
+                dataType: "json",
+                    //headers: { "Authorization": "Bearer " + Token },
+                success: function (data) {
+
+                    var trData = "";
+                    $.each(data, function (index, obj) {
+                        trData += "<tr><td align='center' id='usrRole" + obj.UserRole_Id + "'>" + obj.UserRole_Id + "</td><td align='center' id='UserRoleTitle" + obj.UserRole_Id + "'>" + obj.UserRole_Title + "</td><td align='center'><button class='btn btnEdit btn-success btnUserRoleEdit' id='btnUserRoleEdit" + obj.UserRole_Id + "'>Edit</button > <button class='btn  btn-danger btnUserRoleDelete' id = 'btnUserRoleDelete" + obj.UserRole_Id + "' > Delete </button></div></td></tr> ";
+
+                    });
+
+                    $('#tblUserRole').html(trData);
+                }
+            });
+    }
+    //User_Role submit
+    $('#btnUserRoleEnter').click(function () {
+
+
+        var UserRole_Title = $('#txtUserRole_Title').val();
+
+        var obj = { "UserRole_Title": UserRole_Title };
+        $.ajax({
+            url: '/api/UserRole/UserRoleInsertion',
+            type: "POST",
+            contentType: 'application/json',
+            dataType: "json",
+            data: JSON.stringify(obj),
+            success: function (data) {
+                if (data.Result == "Inserted Successfully") {
+                    $('#tblUserRole').append("<tr><td align='center'>" + data.ObjectData.UserRole_Id + "</div></td><td align='center'>" + data.ObjectData.UserRole_Title + "</td><td align='center'><button class='btn btnEdit btn-success btnEdit' id='btnEdit" + data.ObjectData.Permission_Id + "'>Edit</button > <button class='btn  btn-danger btnDelete' id = 'btnDel" + data.ObjectData.Permission_Id + "' > Delete </button></td></tr>");
+                    alert("Inserted Successfully");
+                    $('#txtUserRole_Title').val('');
+                    $('#txtUserRole_Title').focus();
+
+                }
+                else {
+                    alert(data.Result);
+                }
+
+            }
+        });
+    });
+
+    //UserRole_Edit & del (dynamic buttons)
+    $(document).on('click', '.btnUserRoleEdit', function () {
+        var EditId = $(this).attr('id');
+        EditId = EditId.replace('btnUserRoleEdit', '');
+        var UserRole_Title = $('#UserRoleTitle' + EditId).html();
+        $('#divUpdateUserRole').show();
+        $('#divUserRole').hide();
+        $('#txtUserRoleUpdateId').val(EditId);
+        $('#txtUserRoleUpdateTitle').val(UserRole_Title);
+    })
+    //UserRole Delete
+    $(document).on('click', '.btnUserRoleDelete', function () {
+        var DeleteId = $(this).attr('id');
+        DeleteId = DeleteId.replace('btnUserRoleDelete', '');
+       
+        if (confirm("Do you want to delete department?")) {
+            var obj = { "UserRole_Id": DeleteId };
+            $.ajax({
+                url: '/api/UserRole/UserRoleDeletion',
+                type: "DELETE",
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify(obj),
+                success: function (data) {
+                    if (data.Result == "Deleted successfully") {
+                        $('#btnUserRoleDelete' + data.ObjectData.UserRole_Id).closest('tr').remove();
+                        alert("Deleted successfully");
+                    }
+                    else {
+                        alert(data.Result);
+                    }
+                }
+            })
+        }
+
+    })
+    //Update UserRole
+    $('#btnUserRoleUpdate').click(function () {
+        $('#divUpdateUserRole').hide();
+        $('#divUserRole').show();
+        var UserRole_Id = $('#txtUserRoleUpdateId').val();
+        var UserRole_Title = $('#txtUserRoleUpdateTitle').val();
+
+        var obj = {
+            "UserRole_Id": UserRole_Id,
+            "UserRole_Title": UserRole_Title
+        };
+        $.ajax({
+            url: '/api/UserRole/UpdateUserRole',
+            type: "PUT",
+            contentType: 'application/json',
+            dataType: "json",
+            //headers: { "Autherization": "Bearer " + myToken },
+            data: JSON.stringify(obj),
+            success: function (data) {
+
+                var id = $('#txtUserRoleUpdateId').val();
+                var Title = $('#txtUserRoleUpdateTitle').val();
+                $('#txtUserRole_Title' + id).html(UserRole_Title);
+                alert("Updated Successfully");
+                GetUR();
+            }
+        });
+
+    });
+    })
+</script>

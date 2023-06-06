@@ -1,0 +1,167 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@{
+    Layout = "/Views/Shared/Regal.cshtml";
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ <link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+<script src="~/bootstrap/bootstrap/bootstrap.js"></script>
+    <script src="~/custom_scripts/tokenmanagement.js"></script>
+<style type="text/css">
+<!--
+.style2 {font-size: 36px; font-family: "Times New Roman", Times, serif; color: #CC0000;}
+
+
+.MyCss
+	{
+	   
+  font-size: 70px;
+  font-weight: 600;
+  font-family: 'Roboto', sans-serif;
+  color: #0066FF;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 0px #957dad,
+               1px 2px 0px #957dad,
+               1px 3px 0px #957dad,
+               1px 4px 0px #957dad,
+               1px 5px 0px #957dad,
+               1px 6px 0px #957dad,
+               1px 10px 5px rgba(16, 16, 16, 0.5),
+               1px 15px 10px rgba(16, 16, 16, 0.4),
+               1px 20px 30px rgba(16, 16, 16, 0.3),
+               1px 25px 50px rgba(16, 16, 16, 0.2);
+			   }
+			   
+		.PageBG
+		{
+		 background:#CCCCCC;
+		  
+		}	   
+			
+	
+
+.style3 {color: #000000}
+
+
+        .style7{font-size: 18px; font-weight: bold; font-family: Georgia, "Times New Roman", Times, serif; }
+    
+
+
+
+-->
+</style>
+</head>
+
+<body>
+
+       
+      <!-- general form elements -->
+            <div id="divPerData">
+              <div class="card-header" align="center">
+                <h3 align="center" class="card-title  style2  style3 text-danger">Permissions Data</h3>
+              </div>
+              <!-- /.card-header --> 
+              <!-- form start -->
+         
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="User_Id">User_Id:</label>
+          
+                       <select class="form-control" id="per_userId">
+                    </select>
+
+                  </div>
+                 
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" id="btnPermissionUpdate" class="btn btn-danger  form-control">Search</button>
+                </div>                          
+
+            </div>
+            </div>
+            <!-- general form elements -->
+           
+                
+                <div class="card-body">
+                 
+                <table class="table table-primary table-striped table-bordered ">
+
+     
+        <tr>
+            <th class="style7"><div align="center">Permissions_Id</div></th>
+            <th class="style7"><div align="center">Permission_Title</div> </th>          
+            <th class="style7"><div align="center">Permission_URL</div></th>
+          
+
+            
+        </tr>
+
+        <tbody id='tblPerData'>
+        </tbody>
+       
+    </table>
+
+                </div>
+
+         
+		
+</body>
+</html>
+<script>
+$(document).ready(function () {
+ 
+
+
+    // Get permissions
+        var MyToken = getCookie("MyToken");
+        alert(MyToken);
+    $.ajax(
+        {
+
+            url: '/api/RoleAssignment/GetUserPermissions',
+            type: "GET",
+            dataType: "json",
+                headers: { "Authorization": "Bearer " + MyToken },
+            success: function (data) {
+                var trData = "";
+                $.each(data, function (index, obj) {
+                    trData += "<tr><td align='center'>" + obj.Permission_Id + "</td><td align='center'>" + obj.Permission_Title + "</td><td align='center' >" + obj.Permission_URL + "</td></tr> ";
+
+                });
+
+                $('#tblPerData').html(trData);
+            }
+        });
+        
+        
+          $.ajax(
+        {
+                url: '/api/UserRole/GetUserRole',
+            type: "GET",
+            dataType: "json",
+                headers: { "Authorization": "Bearer " + MyToken },
+            success: function (data) {
+                var trData = "";
+                $.each(data, function (index, obj) {
+                        trData += "<option value = '" + obj.UserRole_Id + "'>" + obj.UserRole_Title + "</option>";
+
+                });
+
+                $('#per_userId').html(trData);
+               
+            }
+        }); 
+
+        });
+
+</script>

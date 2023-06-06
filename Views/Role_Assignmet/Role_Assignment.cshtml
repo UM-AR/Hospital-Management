@@ -1,0 +1,291 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "/Views/Shared/Regal.cshtml";
+}
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+    <script src="~/bootstrap/bootstrap/bootstrap.js"></script>
+    <script src="~/custom_scripts/tokenmanagement.js"></script>
+    <script src="~/custom_page/login_patient.js"></script>
+
+</head>
+
+<body>
+  @*  Update Form*@
+    <div id="divUpdateRoleAssignment">
+        <div class="card-header" align="center">
+            <h3 align="center" class="card-title  style2  style3 text-Success">Role_Assignment Update Form</h3>
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+
+        <div class="card-body">
+            
+                <div class="form-group">
+                    <span class="style6">
+                        <strong>User_Role</strong>
+                    </span>
+
+                    <select class="form-control" id="lstUserRoleAssignmentUpdate">
+                    </select>
+
+                    <span class="style6">
+                        <strong>Permission </strong>
+                    </span>
+
+                    <select id="lstPerTitleUpdate" class="form-control">
+                    </select>
+               
+        </div>
+        </div>
+        <!-- /.card-body -->
+
+        <div class="card-footer">
+            <button type="submit" id="btnROleAssignmentUpdate" class="btn btn-success  form-control">Update</button>
+        </div>
+
+    </div>
+
+<!-- general form elements -->
+<div id="divRoleAssign">
+    <div class="card-header" align="center">
+        <h3 align="center" class="card-title  style2  style3">Roll_Assignment Form</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+
+    <div class="card-body">
+        <div class="form-group">
+            <span class="style6">
+                    <strong>User_Role</strong>
+            </span>
+
+                <select class="form-control" id="lstUserRoleAssignment">
+                    
+                   
+
+                </select>
+
+            <span class="style6">
+                    <strong>Permission </strong>
+            </span>
+
+                <select id="lstPerTitle" class="form-control">
+                </select>
+        </div>
+        </div>
+        <!-- /.card-body -->
+            <div class="card-footer">
+                <button type="submit" id="btnInsertRoleAssignment" class="btn btn-danger  form-control">Insert</button>
+            </div>
+
+            <div class="card-body">
+
+                <table class="table table-primary table-striped table-bordered ">
+
+
+                    <tr>
+                        <th class="style7"><div align="center">Role_Assignment Id</div></th>
+                        <th class="style7"><div align="center">Role</div></th>
+                        <th class="style7"><div align="center">Permission</div> </th>
+                        <th class="style7"><div align="center">URL</div></th>
+                        <th class="style7"><div align="center">Action</div></th>
+                    </tr>
+
+                    <tbody id='tblRoleAssignment'>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+</body>
+</html>
+<script>
+
+    
+    $(document).ready(function () {
+        GetURdata();
+        var UpdateRolEAssignId = 0;
+        $('#divUpdateRoleAssignment').hide();
+
+      
+
+
+        //Get Role_Assignment
+        function GetURdata()
+        {
+            //var MyToken = getCookie("MyToken");
+            //alert(MyToken);
+        $.ajax(
+            {
+                url: '/api/RoleAssignment/GetRoleAssignmentDATA',
+                type: "GET",
+                dataType: "json",
+                    //headers: { " Authorization": "Bearer " + MyToken },
+                success: function (data) {
+
+                    var trData = "";
+                    $.each(data, function (index, obj) {
+
+                        trData += "<tr><td align='center'>" + obj.Role_Assignment_Id + "</td><td align='center' id='UR_Title" + obj.Role_Assignment_Id + "'>" + obj.UserRole_Title + "</td><td align='center' id='PER_Title" + obj.Role_Assignment_Id + "'>" + obj.Permission_Title + "</td><td align='center' id='Per_URL" + obj.Role_Assignment_Id + "'>" + obj.Permission_URL + "</td><td align='center'><button class='btnRAedit btn-success ' id='btnRAedit" + obj.Role_Assignment_Id + "' >Edit</button> <button class='btnRAdelete btn-danger' id='btnRAdelete" + obj.Role_Assignment_Id + "'>Delete</button></td></tr>";
+
+                    });
+
+                    $("#tblRoleAssignment").html(trData);
+                }
+            });
+            }
+
+        //Insert ROLE_ASSIGNMENT
+         // $('#divUpdateRoleAssignment').hide();
+        $('#btnInsertRoleAssignment').click(function () {
+            var Per_ID = $('#lstPerTitle').val();
+            var UserRole_ID = $('#lstUserRoleAssignment').val(); 
+            var obj = { "Permission_Id": Per_ID, "UserRole_Id": UserRole_ID };
+           
+            $.ajax({
+                url: '/api/RoleAssignment/InsertRoleAssignment',
+                type: "POST",
+                contentType: 'application/json',
+                dataType: "json",               
+                data: JSON.stringify(obj),
+                success: function (data) 
+                {
+                    if (data.Result == "Inserted successfully") {
+                        location.reload();
+                        alert("Inserted Successfully");                       
+                    }
+                    else {
+                        alert(data.Result);
+                    }
+                }
+                
+            });
+        });
+
+        //update Roll_Assignment
+        $('#btnROleAssignmentUpdate').click(function () {
+
+           
+            var per_id = $('#lstPerTitleUpdate').val();
+            var UR_id = $('#lstUserRoleAssignmentUpdate').val
+            var obj = {
+
+                "Permission_Id": per_id,
+                "UserRole_Id": UR_id,
+                "Role_Assignment_Id": UpdateRolEAssignId,
+            };
+            $.ajax({
+                url: '/api/RoleAssignment/UpdateUserRole',
+                type: "PUT",
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify(obj),
+                success: function (data) {
+                    if (data.Result == "Updated successfully") {
+                        $('#divUpdateRoleAssignment').hide();
+                        $('#divRoleAssign').show();
+                        GetUR();
+                    }
+                    else {
+                        alert(data.Result);
+                    }
+
+                }
+            });
+        });
+
+        //RoleAssignment_Edit & del (dynamic buttons)
+
+        $(document).on('click', '.btnRAedit', function () {
+            var Role_Assignment_Id = $(this).attr('id');
+            Role_Assignment_Id = Role_Assignment_Id.replace('btnRAedit', '');                                           
+            UpdateRolEAssignId = Role_Assignment_Id;           
+            var UR_Title = $('#UR_Title' + Role_Assignment_Id).html();
+            var PER_Title = $('#PER_Title' + Role_Assignment_Id).html();
+            alert(UR_Title);
+            alert(PER_Title);
+            $('#divRoleAssign').hide();
+            $('#divUpdateRoleAssignment').show();           
+            $('#lstPerTitleUpdate').val(PER_Title);
+            $('#lstUserRoleAssignmentUpdate').val(UR_Title);
+            });
+
+       
+
+            //Role_Assignment Del
+        $(document).on('click', '.btnRAdelete', function () {
+            var RA_Id = $(this).attr('id');
+            RA_Id = RA_Id.replace('btnRAdelete', '');
+            if (confirm("Do you want to delete department?")) {
+                var obj = { "Role_Assignment_Id": RA_Id };
+                $.ajax({
+                    url: '/api/RoleAssignment/DeleteUserRole',
+                    type: "DELETE",
+                    contentType: 'application/json',
+                    dataType: "json",                   
+                    data: JSON.stringify(obj),
+                    success: function (data) {
+                        if (data.Result == "Deleted successfully") {
+                            $('#btnRAdelete' + data.ObjectData.Role_Assignment_Id).closest('tr').remove();
+                            alert("Deleted successfully");
+                        }
+                        else {
+                            alert(data.Result);
+                        }
+                    }
+                });
+            }
+        });
+
+//-------------//
+//GET Permissions
+        //var MyToken = getCookie("MyToken");
+        //alert(MyToken);
+    $.ajax(
+           {
+                url: '/api/Permission/GetPermissions',
+               type: "GET",
+               dataType: "json",
+              // headers: { "Authorization": "Bearer " +MyToken },
+               success: function (data) {
+                   var trData = "";
+                   $.each(data, function (index, obj) {
+
+                        trData += "<option value = '" + obj.Permission_Id + "'>" + obj.Permission_Title + "</option>";
+
+                   });
+                   $('#lstPerTitle').html(trData);
+                    $('#lstPerTitleUpdate').html(trData);
+               }
+           });
+ //GET USER ROLE
+
+        //var MyToken = getCookie("MyToken");
+    $.ajax(
+        {
+                url: '/api/UserRole/GetUserRole',
+            type: "GET",
+            dataType: "json",
+                //headers: { " Authorization": "Bearer " + MyToken },
+            success: function (data) {
+                var trData = "";
+                $.each(data, function (index, obj) {
+                        trData += "<option value = '" + obj.UserRole_Id + "'>" + obj.UserRole_Title + "</option>";
+
+                });
+
+                $('#lstUserRoleAssignment').html(trData);
+                    $('#lstUserRoleAssignmentUpdate').html(trData);
+            }
+        }); 
+        });
+</script>

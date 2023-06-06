@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saved from url=(0045)file:///D:/my%20docs/registration%20form.html -->
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style type="text/css">
+<!--
+.style1 {
+	font-size: 24px;
+	font-weight: bold;
+	font-family: "Courier New", Courier, monospace;
+}
+-->
+</style>
+
+
+<title>registration form</title>
+<link rel="stylesheet" href="./pink form_files/pink form css.css" rel="stylesheet"/>
+<script src="bootstrap/bootstrap/bootstrap.js"></script>
+</head>
+
+<body>
+<form action="file:///D:/my%20docs/registration.asp" enctype="application/x-www-form-urlencoded" method="post" class="form-style-3">
+<table width="101%" border="0" class="form-style-3" align="center">
+  <tbody><tr>
+    <td height="68" colspan="6"><div align="center" class="style1">Registration Form </div></td>
+  </tr>
+  <tr>
+    <td width="16%" align="right"><strong> First-Name:</strong></td>
+    <td width="84%"><input type="text" name="textmidname" id="textmidname" border="1" maxlength="6" size="20" required="required"></td>
+  </tr>
+  <tr>
+    
+    <td align="right"><strong>Middle-Name:</strong></td>
+    <td><input type="text" name="textmidname" id="textmidname" border="1" maxlength="6" size="20" required="required"></td>
+  </tr>
+  <tr>
+   
+    <td height="24" align="right"><strong>Last-Name:</strong></td>
+    <td><input type="text" name="textlstname" id="textlstname" border="1" maxlength="6" size="20" required="required"></td>
+  </tr>
+  <tr>
+  <td height="24" align="right"><strong>City:</strong></td>
+  <td>  <select id="city" name="city">
+ <optgroup label="Punjab"></optgroup>
+ <option>Islamabd</option>
+   <option>Lahore</option>
+ <option>Faisalabad</option>
+ <option>Bahawalpur</option>
+<optgroup label="Sindh"></optgroup>
+ <option>Hyderabad</option>
+ <option>Karachi</option>
+  <option>Larkhana</option>
+   <option>Dadu</option>
+    <option>Ghotki</option>
+<optgroup label="Balochistan"></optgroup>
+  <option>Quetta</option>
+ <option>Gwadar</option>
+ <option>Chaman</option>
+  <option>Turbat</option> 
+  </select>
+  </td>
+ </tr> 
+  <tr>
+    <td height="24" align="right"><strong>Roll-No:</strong></td>
+    <td><input type="number" name="rollno" id="rollno" border="1" maxlength="6" size="50" required="required"></td>
+  </tr>
+  <tr>
+    <td height="24" align="right"><strong>Course:</strong></td>
+    <td>
+	<select name="course" id="course"> 
+	<option value="101">Computer Science</option>
+	<option value="102">Biology</option>
+	<option value="103">Mathematics</option>
+	<option value="104">Chemistry</option>
+	</select>
+	</td>
+  </tr>
+  <tr>
+  <td height="24" align="right"><strong>Gender:</strong></td>
+  <td><input type="radio" name="rdgender" id="rdmale" checked="checked">Male
+    <input type="radio" name="rdgender" id="rdfemale">FeMale
+	  <input type="radio" name="rdgender" id="rdother">Other
+	  </td>
+  
+  </tr>
+  <tr> 
+  <td height="24" align="right"><strong>Phone:</strong></td>
+   <td> <input type="tel" name="telephone" id="telphone" maxlength="12" pattern="03[0-9]{2}-(?!1234567)(?!1111111)(?!7654321)[0-9]{7}" placeholder="Mobile Number" required=""></td>
+   </tr><tr> 
+     <td height="24" align="right"><strong>Address:</strong></td>
+	 <td> <textarea id="address" name="address" cols="80" rows="5"> </textarea> </td>
+    </tr><tr> 
+	 <td height="24" align="right"><strong>Skills:</strong></td>
+	<td> <input type="checkbox" id="skill1" name="skill1">Driving 
+	<input type="checkbox" id="skill2" name="skill2">Swimming
+	<input type="checkbox" id="skill3" name="skill3">Playing
+	</td>
+</tr>
+<tr> 
+ <td height="24" align="right"><strong>E-Mail:</strong></td>
+ <td> <input type="email" id="email" name="email" required="required"> </td>
+ </tr>
+ <tr> 
+ <td height="24" align="right" ="password"="" id="password" name="passord" required="required"> </td>
+ </tr>
+  <tr> 
+ <td height="24" align="right"><strong>Re-Password:</strong></td>
+ <td> <input type="password" id="repassword" name="repassord" required="required"> </td>
+ </tr>
+ <tr> 
+ <td align="right"> <input type="submit" name="btnsubmit" id="btnsubmit" align="middle" checked="checked"></td>
+ </tr>
+</tbody></table>
+</form>
+</body>
+</html>

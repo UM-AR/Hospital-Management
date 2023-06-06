@@ -1,0 +1,343 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <title>Heal & Health Hospital</title>
+
+    <link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
+    <style>
+
+        @@media (min-width: 1025px) {
+        .h-custom {
+        height: 100vh !important;
+        }
+        }
+        .card-registration .select-input.form-control[readonly]:not([disabled]) {
+        font-size: 1rem;
+        line-height: 2.15;
+        padding-left: .75em;
+        padding-right: .75em;
+        }
+        .card-registration .select-arrow {
+        top: 13px;
+        }
+
+        .gradient-custom-2 {
+        /* fallback for old browsers */
+        background: #a1c4fd;
+
+        /* Chrome 10-25, Safari 5.1-6 */
+        background: -webkit-linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1));
+
+        /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        background: linear-gradient(to right, rgba(161, 196, 253, 1), rgba(194, 233, 251, 1))
+        }
+
+        .bg-indigo {
+        background-color: #4835d4;
+        }
+        @@media (min-width: 992px) {
+        .card-registration-2 .bg-indigo {
+        border-top-right-radius: 15px;
+        border-bottom-right-radius: 15px;
+        }
+        }
+        @@media (max-width: 991px) {
+        .card-registration-2 .bg-indigo {
+        border-bottom-left-radius: 15px;
+        border-bottom-right-radius: 15px;
+        }
+        }
+
+        @@font-face {
+          font-family: Clip;
+          src: url("https://acupoftee.github.io/fonts/Clip.ttf");
+        }
+
+        body {
+          background-color: #141114;
+          background-image: linear-gradient(335deg, black 23px, transparent 23px),
+            linear-gradient(155deg, black 23px, transparent 23px),
+            linear-gradient(335deg, black 23px, transparent 23px),
+            linear-gradient(155deg, black 23px, transparent 23px);
+          background-size: 58px 58px;
+          background-position: 0px 2px, 4px 35px, 29px 31px, 34px 6px;
+        }
+
+        .sign {
+          position: absolute;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 1005px;
+          height: 149px;
+          background-image: radial-gradient(
+            ellipse 50% 35% at 50% 50%,
+            #6b1839,
+            transparent
+          );
+          transform: translate(-50%, -50%);
+          letter-spacing: 2;
+          left: 298px;
+          top: 50%;
+          font-family: "Clip";
+          text-transform: uppercase;
+          font-size: 6em;
+          color: #ffe6ff;
+          text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
+            -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
+            0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
+          animation: shine 2s forwards, flicker 3s infinite;
+        }
+
+        @@keyframes blink {
+          0%,
+          22%,
+          36%,
+          75% {
+            color: #ffe6ff;
+            text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
+              -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
+              0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
+          }
+          28%,
+          33% {
+            color: #ff65bd;
+            text-shadow: none;
+          }
+          82%,
+          97% {
+            color: #ff2483;
+            text-shadow: none;
+          }
+        }
+
+        .flicker {
+          animation: shine 2s forwards, blink 3s 2s infinite;
+        }
+
+        .fast-flicker {
+          animation: shine 2s forwards, blink 10s 1s infinite;
+        }
+
+        @@keyframes shine {
+          0% {
+            color: #6b1839;
+            text-shadow: none;
+          }
+          100% {
+            color: #ffe6ff;
+            text-shadow: 0 0 0.6rem #ffe6ff, 0 0 1.5rem #ff65bd,
+              -0.2rem 0.1rem 1rem #ff65bd, 0.2rem 0.1rem 1rem #ff65bd,
+              0 -0.5rem 2rem #ff2483, 0 0.5rem 3rem #ff2483;
+          }
+        }
+
+        @@keyframes flicker {
+          from {
+            opacity: 1;
+          }
+
+          4% {
+            opacity: 0.9;
+          }
+
+          6% {
+            opacity: 0.85;
+          }
+
+          8% {
+            opacity: 0.95;
+          }
+
+          10% {
+            opacity: 0.9;
+          }
+
+          11% {
+            opacity: 0.922;
+          }
+
+          12% {
+            opacity: 0.9;
+          }
+
+          14% {
+            opacity: 0.95;
+          }
+
+          16% {
+            opacity: 0.98;
+          }
+
+          17% {
+            opacity: 0.9;
+          }
+
+          19% {
+            opacity: 0.93;
+          }
+
+          20% {
+            opacity: 0.99;
+          }
+
+          24% {
+            opacity: 1;
+          }
+
+          26% {
+            opacity: 0.94;
+          }
+
+          28% {
+            opacity: 0.98;
+          }
+
+          37% {
+            opacity: 0.93;
+          }
+
+          38% {
+            opacity: 0.5;
+          }
+
+          39% {
+            opacity: 0.96;
+          }
+
+          42% {
+            opacity: 1;
+          }
+
+          44% {
+            opacity: 0.97;
+          }
+
+          46% {
+            opacity: 0.94;
+          }
+
+          56% {
+            opacity: 0.9;
+          }
+
+          58% {
+            opacity: 0.9;
+          }
+
+          60% {
+            opacity: 0.99;
+          }
+
+          68% {
+            opacity: 1;
+          }
+
+          70% {
+            opacity: 0.9;
+          }
+
+          72% {
+            opacity: 0.95;
+          }
+
+          93% {
+            opacity: 0.93;
+          }
+
+          95% {
+            opacity: 0.95;
+          }
+
+          97% {
+            opacity: 0.93;
+          }
+
+          to {
+            opacity: 1;
+          }
+        }
+        .style2 {font-size: 45px}
+        .style4 {color: #FFCCCC}
+        .style7 {font-size: 36px; color: #FF66CC;}
+        .style8 {
+            font-size: 30px;
+            color: #FF99FF;
+          
+        }
+
+
+        .mainmenu {
+            background-color: grey;
+            width: 100%;
+            margin: 0;
+            min-height: 50px;
+            float: left;
+        }
+
+        .mainbox {
+            background-color: grey;
+            width: 100px;
+            margin: 0 auto;
+            min-height: 30px;
+            float: none;
+        }
+
+        @@media screen and (max-width: 800px) {
+
+         .mainbox {
+            background-color: #DABA11;
+            width: 200px;
+            font-style: italic;
+         }
+
+        }
+        .style10 {font-size: 18}
+    </style>
+   
+</head>
+
+<body>
+
+    <section class="h-100 h-custom gradient-custom-2">
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12">
+                    <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+                        <div class="card-body p-0">
+                            <div class="row g-0">
+                                <div class="col-lg-12">
+                                    <div class="p-5">
+                                        <h3 class="fw-normal mb-2" style="color: #4835d4;">
+                                            <div class="style2 Header">
+                                                <p align="center">  <span class="fast-flicker">Heal</span> <span class="style4">&</span> <span class="flicker">Health</span>    </p>
+                                                <p align="center" class="style8 pt-3">GooD Health is the Greatest BlessinG </p>
+                                                <p align="center"><span class="style4"> ______________________</span></p>
+                                            </div>
+                                        </h3>
+
+                                        <h3 align="left" class="mb-2  style7">
+                                            <a href="http://localhost:5212/MainPage/Login_User" class="btn btn-danger form-control btn-lg">
+                                                Get Started                                            
+                                            </a>
+                                        </h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

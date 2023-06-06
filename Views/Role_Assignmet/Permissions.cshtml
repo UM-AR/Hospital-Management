@@ -1,0 +1,253 @@
+﻿
+@{
+    Layout = "/Views/Shared/Regal.cshtml";
+}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+ <link href="~/bootstrap/bootstrap/bootstrap.css.css" rel="stylesheet" />
+<script src="~/bootstrap/bootstrap/bootstrap.js"></script>
+<script src="~/js/site.js"></script>
+<script src="~/custom_scripts/tokenmanagement.js"></script>
+
+</head>
+
+<body>
+      <!-- general form elements -->
+            <div id="divUpdatePermissions">
+              <div class="card-header" align="center">
+                <h3 align="center" class="card-title  style2  style3 text-danger">Permissions Update Form</h3>
+              </div>
+              <!-- /.card-header --> 
+              <!-- form start -->
+         
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="Permissions_Id">Permissions_Id</label>
+                    <input type="number" class="form-control" id="txtPermissionsUpdateId" readonly >
+                  </div>
+                  <div class="form-group">
+                    <label for="Permission_Title">Permission_Title</label>
+                    <input type="text" class="form-control" id="txtPermissionUpdateTitle">
+                  </div> 
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Permission_URL</label>
+                    <input type="text" class="form-control" id="txtPermissionUpdateURL" >
+                  </div> 
+                  </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" id="btnPermissionUpdate" class="btn btn-danger  form-control">Update</button>
+                </div>                          
+
+            </div>
+            <!-- general form elements -->
+            <div id="divPermissions">
+              <div class="card-header">
+                <h3 align="center" class="card-title  style2  style3">Permission</h3>
+              </div>
+              <!-- /.card-header --> 
+              <!-- form start -->
+         
+                <div class="card-body">
+                  <div class="form-group">
+                    <label for="Permissions_Id">Permissions_Id</label>
+                    <input type="number" class="form-control" id="txtPermissionsId" readonly >
+                  </div>
+                  <div class="form-group">
+                    <label for="Permission_Title">Permission_Title</label>
+                    <input type="text" class="form-control" id="txtPermissionTitle">
+                  </div> 
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Permission_URL</label>
+                    <input type="text" class="form-control" id="txtPermissionURL" >
+                  </div> 
+                  </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" id="btnEnter" class="btn btn-primary  form-control">Submit</button>
+                </div>
+           
+                
+                <div class="card-body">
+                 
+                <table class="table table-primary table-striped table-bordered ">
+
+     
+        <tr>
+            <th class="style7"><div align="center">Permissions_Id</div></th>
+            <th class="style7"><div align="center">Permission_Title</div> </th>          
+            <th class="style7"><div align="center">Permission_URL</div></th>
+            <th class="style7"><div align="center">Action</div></th>
+
+            
+        </tr>
+
+        <tbody id='tblPermissions'>
+        </tbody>
+       
+    </table>
+
+                </div>
+
+            </div>
+		
+</body>
+</html>
+
+<script>
+        $(document).ready(function () {
+    
+   
+    $('#divUpdatePermissions').hide();
+  
+
+
+    // Get permissions
+   
+   var MyToken=getCookie("MyToken");
+   console.log(MyToken);
+   $.ajax(
+        {
+            url: '/api/Permission/GetPermissions',
+            type: "GET",
+            dataType: "json",
+           headers: {"Authorization": "Bearer " + MyToken},
+            success: function (data) {  
+                var trData = "";
+                $.each(data, function (index, obj) {
+               
+                    trData += "<tr><td align='center'>" + obj.Permission_Id + "</td><td align='center' id='PermissionTitle" + obj.Permission_Id + "'>" + obj.Permission_Title + "</td><td align='center' id='PerURL" + obj.Permission_Id + "'>" + obj.Permission_URL + "</td><td align='center'><button class='btn btnEdit btn-success btnEdit' id='btnEdit" + obj.Permission_Id + "'>Edit</button > <button class='btn  btn-danger btnDelete' id = 'btnDel" + obj.Permission_Id + "' > Delete </button></div></td></tr> ";
+
+                });
+
+                $('#tblPermissions').html(trData);
+            }
+        });
+
+    //Permission submit
+    $('#btnEnter').click(function () {        
+        var PermissionTitle = $('#txtPermissionTitle').val();
+        var PermissionURL = $('#txtPermissionURL').val();       
+        var obj = { "Permission_Title": PermissionTitle, "Permission_URL": PermissionURL };
+       
+        $.ajax({
+            url: '/api/Permission/PermissionsInsertion',
+            type: "POST",
+            contentType: 'application/json',
+            dataType: "json",
+            data: JSON.stringify(obj),
+           // headers: { " Authorization": "Bearer " + getCookie("MyToken")},
+            success: function (data) {
+
+                if (data.Result == "Inserted Successfully") {
+                    $('#tblPermissions').append("<tr><td align='center'>" + data.ObjectData.Permission_Id + "</td><td align='center'>" + data.ObjectData.Permission_Title + "</td><td align='center'>" + data.ObjectData.Permission_URL + "</td><td align='center'><button class='btn btnEdit btn-success btnEdit' id='btnEdit" + data.ObjectData.Permission_Id + "'>Edit</button > <button class='btn  btn-danger btnDelete' id = 'btnDel" + data.ObjectData.Permission_Id + "' > Delete </button></td></tr>");
+                    alert("Inserted Successfully");
+                    $('#txtPermissionTitle').val('');
+                    $('#txtPermissionURL').val('');
+                    $('#txtPermissionTitle').focus();
+
+                }
+                else {
+                    alert(data.Result);
+                }
+
+            }
+        });
+    });
+
+    //Permission_Edit & del (dynamic buttons)
+    $(document).on('click', '.btnEdit', function () {
+        var EditId = $(this).attr('id');
+        EditId = EditId.replace('btnEdit', '');
+        var Permission_Title = $('#PermissionTitle' + EditId).html();
+        var Permission_URL = $('#PerURL' + EditId).html();
+        $('#divUpdatePermissions').show();
+        $('#divPermissions').hide();
+        $('#txtPermissionsUpdateId').val(EditId);
+        $('#txtPermissionUpdateTitle').val(Permission_Title);
+        $('#txtPermissionUpdateURL').val(Permission_URL);
+       
+
+
+    })
+
+    //delete permissions
+    $(document).on('click', '.btnDelete', function () {
+        var DeleteId = $(this).attr('id');
+        DeleteId = DeleteId.replace('btnDel', '');
+       
+        if (confirm("Do you want to delete department?"))
+        {
+            var obj = { "Permission_Id": DeleteId };
+            $.ajax({
+                url: '/api/Permission/DeletePermission',
+                type: "DELETE",
+                contentType: 'application/json',
+                dataType: "json",
+                data: JSON.stringify(obj),
+                success: function (data) {
+                    if (data.Result == "Deleted successfully") {
+                        $('#btnDel' + data.ObjectData.Permission_Id).closest('tr').remove();
+                        alert("Deleted successfully");
+                    }
+                    else {
+                        alert(data.Result);
+                    }
+                }
+            })
+            }
+
+    })        
+
+        //Update Permission
+        $('#btnPermissionUpdate').click(function () {
+            $('#divUpdatePermissions').hide();
+            $('#divPermissions').show();
+            location.reload();
+            var Permsision_Id = $('#txtPermissionsUpdateId').val();
+            var Permission_Title = $('#txtPermissionUpdateTitle').val();
+            var Permission_URL = $('#txtPermissionUpdateURL').val();
+            var obj = {
+                "Permission_Id": Permsision_Id,
+                "Permission_Title": Permission_Title,
+                "Permission_URL": Permission_URL
+            };
+
+            $.ajax({
+                url: '/api/Permission/UpdatePermissions',
+                type: "PUT",
+                contentType: 'application/json',
+                dataType: "json",
+                //headers: { "Autherization": "Bearer " + myToken },
+                data: JSON.stringify(obj),
+                success: function (data) {
+                    if (data.Result == "Updated successfully") {
+                        var id = $('#txtPermissionsUpdateId').val();
+                        var Title = $('#txtPermissionUpdateTitle').val();
+                        var URL = $('#txtPermissionUpdateURL').val();
+                        $('#txtPermissionTitle' + id).html(Permission_Title);
+                        $('#txtPermissionURL' + id).html(Permission_URL);
+                       
+                    }
+                    else {
+                        alert(data.Result);
+                    }
+                }
+            });
+        });
+         });
+
+</script>
+<script>
+var MyToken = getCookie("MyToken");
+    alert(MyToken);
+</script>
+<script src="~/custom_scripts/tokenmanagement.js"></script>
+<script src="~/custom_page/login_patient.js"></script>
+

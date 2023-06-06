@@ -1,0 +1,173 @@
+﻿@{
+    Layout = "/Views/Shared/Regal.cshtml";
+}
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+   
+}
+
+
+<head>
+    <title>Untitled Document</title>
+    <style type="text/css">
+        <!--
+        .style1 {
+            font-size: 36px;
+            font-weight: bold;
+            color: #999999;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .style2 {
+            font-family: "Courier New", Courier, monospace;
+            font-weight: bold;
+        }
+
+        .background {
+            background-color: #CCCCFF;
+        }
+
+        -->
+    </style>
+    <style type="text/css">
+        <!--
+        .style3 {
+            color: #000000
+        }
+
+        .style4 {
+            color: #FFFFFF
+        }
+
+        .style5 {
+            color: #333333
+        }
+        -->
+
+        .animate-charcter {
+            text-transform: uppercase;
+            background-image: linear-gradient( -225deg, #231557 0%, #44107a 29%, #ff1361 67%, #fff800 100% );
+            background-size: auto auto;
+            background-clip: border-box;
+            background-size: 200% auto;
+            color: #FFFFFF;
+            background-clip: text;
+            text-fill-color: transparent;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textclip 2s linear infinite;
+            display: inline-block;
+            font-size: 100px;
+            animation-direction: reverse;
+        }
+
+        @@keyframes textclip {
+            to {
+                background-position: 200% center;
+            }
+
+    </style>
+</head>
+
+
+
+
+
+<body class="background">
+    <div class="container background">
+        <table width="843" height="285" border="0" align="center">
+
+            <tbody>
+                <tr>
+                    <td colspan="6"><div align="center"><span class="animate-charcter">Student Form</span></div></td>
+                </tr>
+                <tr>
+
+
+                <tr>
+                    <td><p align="center" class="style2 style5">Name</p>    </td>
+                    <td><p align="center" class="style2 style5">Father Name</p>    </td>
+                    <td><p align="center" class="style2 style5">Roll No</p>    </td>
+                    <td><p align="center" class="style2 style5">Course</p>    </td>
+                </tr>
+                <tr>
+                    <td align="center"><input type="text" name="txtname" id="txtname" required="required" placeholder="Name"></td>
+                    <td align="center"><input type="text" name="txtfname" id="txtfname" required="required" placeholder="Last Name"></td>
+                    <td align="center"><input type="number" name="txtRollNo" id="txtRollNo" required="required" placeholder="Roll No"></td>
+                    <td align="center">
+                        <select name="course" id="course">
+                            <option value="101">Computer Science</option>
+                            <option value="102">Biology</option>
+                            <option value="103">Mathematics</option>
+                            <option value="104">Chemistry</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td height="84" colspan="7" align="center"><input type="button" value="Submit" class="btn-danger" align="middle" onclick="GetUserData()"> </td>
+                </tr>
+            </tbody>
+        </table>
+        <table width="856" border="0" align="center" class=" table-bordered table-danger">
+            <thead>
+                <tr>
+                    <th width="158">
+                        <div align="center" class="style2">
+                            <div align="left">Sr. # </div>
+                        </div>
+                    </th>
+                    <th width="158"><div align="left"><span class="style2 style3">Name</span></div></th>
+                    <th width="166"><div align="left"><span class="style2">Father Name</span></div></th>
+                    <th width="163">
+                        <div align="center" class="style2">
+                            <div align="left">Roll No</div>
+                        </div>
+                    </th>
+                    <th width="189">
+                        <div align="center" class="style2">
+                            <div align="left">Course</div>
+                        </div>
+                    </th>
+                    <th width="189">
+                        <div align="center" class="style2">
+                            <div align="left">Action</div>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tblstudent">
+            </tbody>
+        </table>
+    </div>
+
+
+
+
+    <script>
+
+        var SrNo = 1;
+        function GetUserData() {
+            var Name = document.getElementById('txtname').value;
+            var Fname = document.getElementById('txtfname').value;
+            var RollNo = document.getElementById('txtRollNo').value;
+            var ListBox = document.getElementById('course');
+            var courseList = ListBox.value;
+            var course = ListBox.options[ListBox.selectedIndex].text;
+            var Data = "<tr id='tr" + SrNo + "'><td>" + SrNo + "</td><td>" + Name + "</td><td>" + Fname + "</td><td>" + RollNo + "</td><td>" + course + "</td><td><button class='btn btn-danger text-dark' id='btnDelete" + SrNo + "' onclick='RemoveRow(" + SrNo + ")'>Delete</button></td></tr>";
+            document.getElementById('tblstudent').innerHTML += Data;
+            SrNo++;
+            document.getElementById('txtname').value = "";
+            document.getElementById('txtfname').value = "";
+            document.getElementById('txtRollNo').value = "";
+            document.getElementById('txtname').focus();
+        }
+        function RemoveRow(id) {
+            document.getElementById('tr' + id).remove();
+        }
+
+    </script>
+</body>

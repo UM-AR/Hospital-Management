@@ -1,0 +1,164 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Untitled Document</title>
+<link href="bootstrap/bootstrap.css.css" rel="stylesheet"/>
+<script src="bootstrap/bootstrap.js.js"></script>
+<style type="text/css">
+<!--
+.style1 {font-size: 18px} 
+-->
+</style>
+</head>
+<body>
+<form action="registration.asp" enctype="application/x-www-form-urlencoded" method="post"  class="form-control">
+     <div class="container">
+          <div class="row">
+                <div class="col-md-12 mt-2 pt-2 rounded bg-success text-light">
+				<h2 align="center"><strong>STUDENT FORM</strong></h2>
+	     </div>
+   	   </div>
+
+		<div class="row pt-2">
+		<div class="col-md-2  style1">
+		  <div align="right"><strong>First Name:</strong></div>
+		</div>
+				<div class="col-md-8">		
+				<input type="text" class="form-control" style="back" name="txtName" id="txtName" requried='required' /> 
+				</div>
+</div>
+					<div class="row pt-2">
+		<div class="col-md-2 style1">
+		  <div align="right"><strong>Last Name:</strong></div>
+		</div>
+				<div class="col-md-8 ">		
+				<input type="text" class="form-control" style="back" name="txtlastName" id="txtlastName" /> 
+				</div>
+</div>
+				
+					<div class="row pt-2">
+		<div class="col-md-2  style1">
+		  <div align="right"><strong>Roll No:</strong></div>
+		</div>
+				<div class="col-md-8">		
+				<input type="number" class="form-control" style="back" name="rollnum" id="rollnum" /> 
+				</div>
+</div>
+	<div class="row pt-2">
+		<div class="col-md-2 style1">
+		  <div align="right"><strong>Phone:</strong></div>
+		</div>
+				<div class="col-md-8">		
+				<input type="telephone" class="form-control" style="back" name="telnumber" id="telnumber" /> 
+				</div>
+</div>
+	<div class="row pt-2">
+		<div class="col-md-2  style1">
+		  <div align="right"><strong>Date-of-Birth:</strong></div>
+		</div>
+				<div class="col-md-8 ">		
+				<input type="date" class="form-control"  name="dob" id="dob" required='required'/>
+				</div>
+</div>
+
+<div class="row pt-2">
+		<div class="col-md-2  style1">
+		  <div align="right"><strong>E-mail:</strong></div>
+		  </div>
+		  		<div class="col-md-8">
+			 <input type="email" class="form-control" id="email"  name="email" required='required' /> 
+			 </div>
+	</div>
+<div class="container-fluid">
+<div class="row pt-2">
+<div class="col-md-2 style1">
+		  <div align="right"><strong>City:</strong></div> </div>
+				<div class="col-md-8 ">		
+				<select id="city" name="city" class="form-control">
+				</div>
+ <optgroup label="Punjab"></optgroup>
+ <option>Islamabad</option>
+   <option>Lahore</option>
+ <option>Faisalabad</option>
+ <option>Bahawalpur</option>
+<optgroup label="Sindh"></optgroup>
+ <option>Hyderabad</option>
+ <option>Karachi</option>
+  <option>Larkhana</option>
+   <option>Dadu</option>
+    <option>Ghotki</option>
+<optgroup label="Balochistan"></optgroup>
+  <option>Quetta</option>
+ <option>Gwadar</option>
+ <option>Chaman</option>
+  <option>Turbat</option> 
+  </select>
+</div>
+</div>
+<div class="row pt-2">
+		<div class="col-md-2 style1">
+		  <div align="right"><strong>Course:</strong></div>
+		</div>
+				<div class="col-md-8">		
+				<select name="course" id="course" class="form-control"> 
+				</div>
+	<option value="101">Computer Science</option>
+	<option value="102">Biology</option>
+	<option value="103">Mathematics</option>
+	<option value="104">Chemistry</option>
+	</select>
+</div>
+</div>
+
+<div class="row pt-2">
+		<div class="col-md-2 style1">
+		  <div align="right"><strong>Address:</strong></div>
+		</div>
+				<div class="col-md-8">		
+				<textarea id="address" name="address" cols="80" rows="5" class="form-control"> </textarea>
+				</div>
+</div>
+<div class="row pt-2">
+		<div class="col-md-2 style1">
+		  <div align="right"><strong>Skills:</strong></div>
+		</div>
+				<div class="col-md-8 class="form-control"">		
+				<input type="checkbox" id="skill1" name="skill1" />Driving 
+	<input type="checkbox" id="skill2" name="skill2" />Swimming
+	<input type="checkbox" id="skill3" name="skill3" />Playing
+				</div>
+</div>
+
+<div class="row pt-2">
+		<div class="col-md-2 style1">
+		  <div align="right"><strong>Skill_Range:</strong></div>
+		</div>
+				<div class="col-md-8 ">		
+			<input type="range" class="form-control" name="range" id="range" size="20" required='required'/>
+				</div>
+</div>
+<div class="row pt-2">
+		<div class="col-md-2  style1">
+		  <div align="right"><strong>Password:</strong></div>
+		</div>
+				<div class="col-md-8">		
+			<input type="Password" class="form-control" name="password" id="password"  required='required'/>
+				</div>
+</div>
+
+<div class="row pt-2">
+		<div class="col-md-2 style1">
+		  <div align="right"><strong>Re-Password:</strong></div>
+		</div>
+				<div class="col-md-8">		
+			<input type="Password" class="form-control" name="RePassword" id="RePassword"  required='required'/>
+				</div>
+</div>
+<div  align="center" class="col-md-12" >
+				<input type="submit" name="btnsubmit" id="btnsubmit"  align="absmiddle"checked="checked" class="btn btn-success form-control"  />
+	     </div>
+		 </div>
+		 </form>
+</body>
+</html>
